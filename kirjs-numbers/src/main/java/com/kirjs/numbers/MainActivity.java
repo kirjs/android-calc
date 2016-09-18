@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void displayQuestion(String question) {
         getAnswerField().getText().clear();
-        getQuestion().setText(question);
+        getQuestionField().setText(question);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private TextView getQuestion() {
+    private TextView getQuestionField() {
         return (TextView) findViewById(R.id.question);
     }
 
