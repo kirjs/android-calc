@@ -5,7 +5,7 @@ public class Answer {
     public final int n1;
     public final int n2;
     public final boolean isValid;
-    private long improvement;
+    private long improvement = 0;
 
     public Answer(boolean isValid, int n1, int n2){
         this.isValid = isValid;

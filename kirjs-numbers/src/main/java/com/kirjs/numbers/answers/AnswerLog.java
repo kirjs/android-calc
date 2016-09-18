@@ -14,8 +14,11 @@ public class AnswerLog {
                 times++;
             }
         }
-        long average = total / times;
-        answer.setImprovement(answer.time - average);
+        if(times > 0 ){
+            answer.setImprovement(answer.time - total / times);
+        }
+
+
         answers.add(answer);
     }
 }
