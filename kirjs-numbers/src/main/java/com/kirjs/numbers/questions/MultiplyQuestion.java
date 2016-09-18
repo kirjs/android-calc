@@ -16,7 +16,7 @@ public class MultiplyQuestion implements Question {
     public String next() {
         number1 = 5 + (int) Math.ceil(Math.random() * 20);
         number2 = 5 + (int) Math.ceil(Math.random() * 20);
-        return String.valueOf(number1) + " xx " + String.valueOf(number2);
+        return String.valueOf(number1) + " x " + String.valueOf(number2);
     }
 
     @Override

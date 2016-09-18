@@ -15,4 +15,10 @@
         android:textSize="@dimen/font_size"
         android:inputType="number"
         />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/stats"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>
