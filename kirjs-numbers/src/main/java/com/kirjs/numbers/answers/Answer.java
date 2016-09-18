@@ -1,12 +1,14 @@
 package com.kirjs.numbers.answers;
 
 public class Answer {
-    public final long time;
+    public long time;
     public final int n1;
     public final int n2;
+    public final boolean isValid;
     private long improvement;
 
-    public Answer(int n1, int n2, long time){
+    public Answer(boolean isValid, int n1, int n2){
+        this.isValid = isValid;
         if(n2>n1){
             int temp = n1;
             n1 = n2;
@@ -14,7 +16,6 @@ public class Answer {
         }
         this.n1 = n1;
         this.n2 = n2;
-        this.time = time;
     }
 
     public boolean sameQuestionAs(Answer a) {
@@ -27,5 +28,13 @@ public class Answer {
 
     public long getImprovement() {
         return improvement;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    public long getTime() {
+        return time;
     }
 }
