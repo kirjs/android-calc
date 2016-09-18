@@ -8,13 +8,15 @@ import android.view.Menu;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.kirjs.numbers.questions.MultiplyQuestion;
+
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        generateQuestion();
-
+        final MultiplyQuestion question = new MultiplyQuestion();
+        displayQuestion(question.next());
 
         TextWatcher fieldValidatorTextWatcher = new TextWatcher() {
             @Override
@@ -27,27 +29,20 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!s.toString().isEmpty() && Integer.valueOf(s.toString()) == number1 * number2) {
-                    generateQuestion();
+                if(question.validate(s.toString())){
+                    displayQuestion(question.next());
                 }
             }
-
-
         };
         getAnswerField().addTextChangedListener(fieldValidatorTextWatcher);
 
     }
 
-    private int number1;
-    private int number2;
 
-    public void generateQuestion() {
-        TextView question = getQuestion();
-        number1 = 5 + (int) Math.ceil(Math.random() * 20);
-        number2 = 5 + (int) Math.ceil(Math.random() * 20);
+
+    public void displayQuestion(String question) {
         getAnswerField().getText().clear();
-
-        question.setText(String.valueOf(number1) + " x " + String.valueOf(number2));
+        getQuestion().setText(question);
     }
 
     @Override
