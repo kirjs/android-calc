@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.kirjs.numbers.questions.MultiplyQuestion;
+import com.kirjs.numbers.utils.QuestionTextWatcher;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -18,26 +19,12 @@ public class MainActivity extends AppCompatActivity {
         final MultiplyQuestion question = new MultiplyQuestion();
         displayQuestion(question.next());
 
-        TextWatcher fieldValidatorTextWatcher = new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(question.validate(s.toString())){
-                    displayQuestion(question.next());
-                }
-            }
-        };
-        getAnswerField().addTextChangedListener(fieldValidatorTextWatcher);
+        ;
+        getAnswerField().addTextChangedListener(new QuestionTextWatcher(result -> {
+            if (question.validate(result)) displayQuestion(question.next());
+        }));
 
     }
-
 
 
     public void displayQuestion(String question) {
@@ -53,12 +40,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private TextView getQuestionField() {
         return (TextView) findViewById(R.id.question);
     }
 
-    private EditText getAnswerField(){
+    private EditText getAnswerField() {
         return (EditText) findViewById(R.id.edit_message);
     }
 }

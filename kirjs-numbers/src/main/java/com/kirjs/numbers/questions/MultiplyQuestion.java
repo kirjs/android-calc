@@ -1,7 +1,5 @@
 package com.kirjs.numbers.questions;
 
-import android.widget.TextView;
-
 public class MultiplyQuestion implements Question {
     private int number1;
     private int number2;
