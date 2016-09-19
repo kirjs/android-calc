@@ -5,17 +5,20 @@ import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
 
+import com.kirjs.numbers.MainActivity;
 import com.kirjs.numbers.questions.Question;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class QuestionTextWatcher implements TextWatcher {
-    private Consumer<String> handleResult;
+    private final MainActivity activity;
 
-    public QuestionTextWatcher(Consumer<String> handleResult){
 
-        this.handleResult = handleResult;
+    public QuestionTextWatcher(MainActivity activity){
+
+
+        this.activity = activity;
     }
 
     @Override
@@ -29,6 +32,6 @@ public class QuestionTextWatcher implements TextWatcher {
     @TargetApi(Build.VERSION_CODES.N)
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        handleResult.accept(s.toString());
+        activity.handleAnswer(s.toString());
     }
 }

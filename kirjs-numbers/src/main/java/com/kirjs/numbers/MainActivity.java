@@ -2,8 +2,6 @@ package com.kirjs.numbers;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -21,33 +19,37 @@ public class MainActivity extends AppCompatActivity {
     private long startTime;
     private AnswerLog answerLog = new AnswerLog();
     ArrayList<String> stats = new ArrayList<>();
+    private final MultiplyQuestion question = new MultiplyQuestion();
+    private ArrayAdapter<String> adapter;
+
+    public void handleAnswer(String result) {
+        Answer answer = question.validate(result);
+        if (answer.isValid) {
+            answer.setTime(System.currentTimeMillis() - startTime);
+            answerLog.add(answer);
+            adapter.clear();
+            adapter.addAll(answerLog.last(10));
+            displayQuestion(question.next());
+            displayLog();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, stats);
         setContentView(R.layout.activity_main);
-        final MultiplyQuestion question = new MultiplyQuestion();
         displayQuestion(question.next());
 
 
         stats.add("hello");
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, stats);
         this.getStatsField().setAdapter(adapter);
 
-        getAnswerField().addTextChangedListener(new QuestionTextWatcher(result -> {
-            Answer answer = question.validate(result);
-            if (answer.isValid) {
-                answer.setTime(System.currentTimeMillis() - startTime);
-                answerLog.add(answer);
-                adapter.clear();
-                adapter.addAll(answerLog.last(10));
-                displayQuestion(question.next());
-                displayLog();
-            }
-        }));
+        getAnswerField().addTextChangedListener(new QuestionTextWatcher(this));
 
-    }
+}
 
     private void displayLog() {
 
