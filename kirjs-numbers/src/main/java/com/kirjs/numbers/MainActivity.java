@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         displayQuestion(question.next());
 
 
-        stats.add("hello");
         this.getStatsField().setAdapter(adapter);
 
         getAnswerField().addTextChangedListener(new QuestionTextWatcher(this));
