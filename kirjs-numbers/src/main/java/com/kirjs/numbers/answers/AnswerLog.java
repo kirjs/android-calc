@@ -13,12 +13,12 @@ public class AnswerLog {
         long times = 0;
         for (Answer a : answers) {
             if (answer.sameQuestionAs(a)) {
-                total += a.time;
+                total += a.getTime();
                 times++;
             }
         }
         if (times > 0) {
-            answer.setImprovement(answer.time - total / times);
+            answer.setImprovement(answer.getTime() - total / times);
         }
 
 
@@ -30,7 +30,7 @@ public class AnswerLog {
         for (int i = Math.max(0, answers.size() - number); i < answers.size(); i++) {
             Answer a = answers.get(i);
             long improvement = a.getImprovement();
-            result.add(a.n1 + "x" + a.n2 + " - " + a.getTime() + (improvement > 0 ? " (" + improvement + ")" : ""));
+            result.add(a.getN1() + "x" + a.getN2()+ " - " + a.getTime() + (improvement > 0 ? " (" + improvement + ")" : ""));
         }
         Collections.reverse(result);
         return result;

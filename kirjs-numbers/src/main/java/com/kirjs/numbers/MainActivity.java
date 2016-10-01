@@ -11,7 +11,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
@@ -32,15 +35,14 @@ public class MainActivity extends AppCompatActivity  {
     ArrayList<String> stats = new ArrayList<>();
     private final MultiplyQuestion question = new MultiplyQuestion();
     private ArrayAdapter<String> adapter;
-    private Firebase myFirebaseRef;
+    private Firebase statsRef;
 
     public void handleAnswer(String result) {
         Answer answer = question.validate(result);
         if (answer.isValid) {
             answer.setTime(System.currentTimeMillis() - startTime);
-            answerLog.add(answer);
-            adapter.clear();
-            adapter.addAll(answerLog.last(10));
+
+            statsRef.push().setValue(answer);
             displayQuestion(question.next());
             displayLog();
         }
@@ -53,9 +55,9 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Firebase.setAndroidContext(this);
-        myFirebaseRef = new Firebase("https://kcherkashin-1.firebaseio.com/");
+        Firebase myFirebaseRef = new Firebase("https://kcherkashin-1.firebaseio.com/");
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, stats);
-
+        statsRef = myFirebaseRef.child("users").child("default").child("stats");
 
         new FirebaseAuth.AuthStateListener() {
             @Override
@@ -73,10 +75,40 @@ public class MainActivity extends AppCompatActivity  {
             }
         };
 
+
+        statsRef.limitToLast(2).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Answer answer = dataSnapshot.getValue(Answer.class);
+                answerLog.add(answer);
+                adapter.clear();
+                adapter.addAll(answerLog.last(10));
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
         displayQuestion(question.next());
         this.getStatsField().setAdapter(adapter);
         getAnswerField().addTextChangedListener(new QuestionTextWatcher(this));
-        startActivityForResult(new Intent(this, AuthActivity.class), 9003);
+        //startActivityForResult(new Intent(this, AuthActivity.class), 9003);
     }
 
 

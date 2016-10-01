@@ -1,22 +1,11 @@
 package com.kirjs.numbers.answers;
 
 public class Answer {
-    public long time;
-    public final int n1;
-    public final int n2;
-    public final boolean isValid;
+    private long time;
+    private int n1;
+    private int n2;
+    public boolean isValid;
     private long improvement = 0;
-
-    public Answer(boolean isValid, int n1, int n2){
-        this.isValid = isValid;
-        if(n2>n1){
-            int temp = n1;
-            n1 = n2;
-            n2 = temp;
-        }
-        this.n1 = n1;
-        this.n2 = n2;
-    }
 
     public boolean sameQuestionAs(Answer a) {
         return a.n1 == this.n1 && a.n2 == this.n2;
@@ -36,5 +25,33 @@ public class Answer {
 
     public long getTime() {
         return time;
+    }
+
+    public int getN1() {
+        return n1;
+    }
+
+    public int getN2() {
+        return n2;
+    }
+
+    public void setN1(int n1) {
+        this.n1 = n1;
+    }
+
+    public void setN2(int n2) {
+        this.n2 = n2;
+    }
+
+    public void setIsValid(boolean isValid) {
+        this.isValid = isValid;
+    }
+
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setValid(boolean isValid) {
+        this.isValid = isValid;
     }
 }

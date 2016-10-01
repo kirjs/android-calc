@@ -22,7 +22,11 @@ public class MultiplyQuestion implements Question {
     @Override
     public Answer validate(String question) {
         boolean isValid = !question.isEmpty() && Integer.valueOf(question) == number1 * number2;
-        return new Answer(isValid, number1, number2);
+        Answer answer = new Answer();
+        answer.setIsValid(isValid);
+        answer.setN1(number1);
+        answer.setN2(number2);
+        return answer;
     }
 
 }
