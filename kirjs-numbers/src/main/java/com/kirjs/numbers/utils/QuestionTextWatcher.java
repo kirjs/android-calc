@@ -5,17 +5,13 @@ import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import com.kirjs.numbers.MainActivity;
-import com.kirjs.numbers.questions.Question;
-
-import java.util.function.Consumer;
-import java.util.function.Function;
+import com.kirjs.numbers.QuestionActivity;
 
 public class QuestionTextWatcher implements TextWatcher {
-    private final MainActivity activity;
+    private final QuestionActivity activity;
 
 
-    public QuestionTextWatcher(MainActivity activity){
+    public QuestionTextWatcher(QuestionActivity activity){
 
 
         this.activity = activity;
